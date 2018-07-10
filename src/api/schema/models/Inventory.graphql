@@ -1,0 +1,19 @@
+type Inventory {
+    assetid: ID,
+    assetname: String,
+    assettype: String,
+    department: String,
+    ownerid: Int,
+    owner:Owner
+}
+type Query{
+    inventory(ownerid: ID): Inventory
+
+}
+type Mutation {
+    createInventory(assetname: String, assettype: String, department: String, ownerid: Int): Inventory
+}
+schema {
+    query: Query
+    mutation: Mutation
+}

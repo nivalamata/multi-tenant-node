@@ -20,6 +20,9 @@ describe('/api/clients', () => {
 
     beforeAll(async () => {
         settings = await prepareServer({ migrate: true });
+        await runSeed<Client>(CreateaClient);
+        bruce = await runSeed<User>(CreateBruce);
+        fakeAuthenticationForUser(bruce, true);
     });
 
     // -------------------------------------------------------------------------
@@ -27,6 +30,7 @@ describe('/api/clients', () => {
     // -------------------------------------------------------------------------
 
     afterAll(async () => {
+        nock.cleanAll();
         await closeDatabase(settings.connection);
     });
 

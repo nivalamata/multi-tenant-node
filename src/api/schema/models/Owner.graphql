@@ -1,0 +1,21 @@
+
+type Owner {
+id: ID,
+name: String,
+empid: String,
+inventory: [Inventory] 
+
+}
+type Query {
+    owner(id: ID): Owner
+}
+
+
+type Mutation {
+    ownerCreate(name: String, empid: String): Owner
+
+}
+schema {
+    query: Query
+    mutation: Mutation
+}

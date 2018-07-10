@@ -1,9 +1,10 @@
-import { Controller, Query, Authorized } from 'vesper';
-import { FindManyOptions } from 'typeorm';
+import { Controller, Query, Authorized, Mutation } from 'vesper';
+import { FindManyOptions, DeepPartial } from 'typeorm';
 
 import { PetService } from '../../services/PetService';
 import { Pet } from '../../models/Pet';
 import { User } from '../../models/User';
+import { NotAuthorized } from '../../errors/NotAuthorized';
 
 export interface PetArgs {
     limit?: number;
@@ -30,13 +31,13 @@ export class PetController {
             findOptions.skip = args.offset;
         }
         if (args.order === 'last') {
-            findOptions.order = {id: 'DESC'};
+            findOptions.order = { id: 'DESC' };
         }
         if (args.order === 'name') {
-            findOptions.order = {name: 'ASC'};
+            findOptions.order = { name: 'ASC' };
         }
         if (args.order === 'age') {
-            findOptions.order = {age: 'ASC'};
+            findOptions.order = { age: 'ASC' };
         }
 
         return this.petService.find(this.currentUser, findOptions);
@@ -47,4 +48,35 @@ export class PetController {
     public pet(arg: { id: number }): Promise<Pet> {
         return this.petService.findOne(this.currentUser, arg.id);
     }
+
+    /**
+     * This method creates pets for current user
+     */
+    @Mutation()
+    @Authorized()
+    public petCreate(args: DeepPartial<Pet>): Promise<Pet> {
+        if (!this.currentUser) {
+            throw new NotAuthorized();
+        }
+        return this.petService.createFrom(this.currentUser, args);
+    }
+
+    @Mutation()
+    @Authorized()
+    public petDelete(arg: { id: number }): Promise<boolean> {
+        if (!this.currentUser) {
+            throw new NotAuthorized();
+        }
+        return this.petService.remove(this.currentUser, arg.id);
+    }
+
+    @Query()
+    @Authorized()
+    public findUserInfoForPets(arg: { user_id: number }): Promise<any> {
+        if (!this.currentUser) {
+            throw new NotAuthorized();
+        }
+        return this.petService.getUserAndPets(this.currentUser, arg.user_id);
+    }
+
 }

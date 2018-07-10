@@ -1,7 +1,7 @@
 import { Connection } from 'typeorm';
 
-import { User } from '../../../../src/api/models/User';
-import { Client } from '../../../../src/api/models/Client';
+import { User } from '../../../api/models/User';
+import { Client } from '../../../api/models/Client';
 import { Factory, Seed } from '../../../lib/seed/types';
 import { SeedConstants } from '../SeedConstants';
 
@@ -29,7 +29,7 @@ export class CreateBruce implements Seed {
 
         // const connection = await factory.getConnection();
         const repo = connection.getRepository(Client);
-        const client = await repo.findOne({where: {name: SeedConstants.defaultClient}});
+        const client = await repo.findOne({ where: { name: SeedConstants.defaultClient } });
         const em = connection.createEntityManager();
 
         const user = new User();

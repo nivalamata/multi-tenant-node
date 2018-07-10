@@ -12,6 +12,10 @@ import { ClientController } from '../api/schema/controllers/ClientController';
 import { env } from '../env';
 import { currentUserVesper } from '../auth/currentUserChecker';
 import { authorizationCheckerVesper } from '../auth/authorizationChecker';
+import { OwnerController } from '../api/schema/controllers/OwnerController';
+import { Owner } from '../api/models/Owner';
+import { InventoryController } from '../api/schema/controllers/InventoryController';
+import { Inventory } from '../api/models/Inventory';
 
 // const apolloUploadExpress = require('apollo-upload-server').apolloUploadExpress;
 
@@ -26,11 +30,15 @@ export const graphqlLoader: MicroframeworkLoader = async (settings: Microframewo
                 UserController,
                 PetController,
                 ClientController,
+                OwnerController,
+                InventoryController,
             ],
             entities: [
                 User,
                 Pet,
                 Client,
+                Owner,
+                Inventory,
             ],
             schemas: [
                 __dirname + '/../api/schema/models/**/*.graphql',

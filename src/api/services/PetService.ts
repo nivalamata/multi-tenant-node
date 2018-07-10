@@ -1,6 +1,6 @@
 import { Service } from 'typedi';
 import { OrmRepository } from 'typeorm-typedi-extensions';
-import { FindManyOptions } from 'typeorm';
+import { FindManyOptions, DeepPartial } from 'typeorm';
 
 import { EventDispatcher, EventDispatcherInterface } from '../../decorators/EventDispatcher';
 import { Logger, LoggerInterface } from '../../decorators/Logger';
@@ -8,7 +8,6 @@ import { Pet } from '../models/Pet';
 import { User } from '../models/User';
 import { PetRepository } from '../repositories/PetRepository';
 import { events } from '../subscribers/events';
-import { constants } from '../common/constants';
 import { NotAuthorized } from '../errors/NotAuthorized';
 
 @Service()
@@ -51,13 +50,16 @@ export class PetService {
         return this.petRepository.findOne({ where: {clientId: currentUser.clientId, id}});
     }
 
-    public async create(currentUser: User, pet: Pet): Promise<Pet> {
-        if (currentUser.id !== constants.system.userId || pet.clientId === undefined) {
-            pet.clientId = currentUser.clientId;
-        }
+    public createFrom(currentUser: User, args: DeepPartial<Pet>): Promise<Pet> {
+        const pet: Pet = this.petRepository.create(args);
+        return this.create(currentUser, pet);
+    }
 
+    public async create(currentUser: User, pet: Pet): Promise<Pet> {
+        pet.clientId = currentUser.clientId;
         pet.createdById = currentUser.id;
         pet.updatedById = currentUser.id;
+        pet.user = currentUser;
 
         this.log.info('Create a new pet => ', pet.toString());
         const newPet = await this.petRepository.save(pet);
@@ -81,5 +83,23 @@ export class PetService {
             }, reject);
         });
     }
+    public remove(currentUser: User, id: number): Promise<boolean> {
+        this.log.info('Delete a pet');
+        return new Promise((resolve, reject) => {
+            this.findOne(currentUser, id).then( (pet: Pet) => {
+                this.petRepository.remove(pet).then(() => {
+                    resolve(true);
+                }, reject);
+            }, reject);
+        });
+    }
 
+    public findByUserIds(currentUser: User, ids: number[]): Promise<Pet[]> {
+        this.log.info('Find All pets');
+        return this.petRepository.findByUserIds(ids);
+    }
+
+    public getUserAndPets(currentUser: User, id: number): Promise<any> {
+        return this.petRepository.getUserAndPets(currentUser, id);
+    }
 }

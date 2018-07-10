@@ -35,13 +35,14 @@ export class UserService {
             options.relations = [];
         }
         options.relations.push('pets');
+
         // options.relations.push('updatedBy');
         return this.userRepository.find(options);
     }
 
-    public findOne(currentUser: User, id: number): Promise<User | undefined> {
+    public findOne(currentUser: User, id: number): Promise<any> {
         this.log.info('Find A user');
-        return this.userRepository.findOne({ where: {clientId: currentUser.clientId, id}});
+        return this.userRepository.findOne({ where: { clientId: currentUser.clientId, id } });
     }
 
     public async create(currentUser: User, user: User): Promise<User> {
@@ -73,7 +74,7 @@ export class UserService {
     public remove(currentUser: User, id: number): Promise<boolean> {
         this.log.info('Delete a user');
         return new Promise((resolve, reject) => {
-            this.findOne(currentUser, id).then( (user: User) => {
+            this.findOne(currentUser, id).then((user: User) => {
                 this.userRepository.remove(user).then(() => {
                     resolve(true);
                 }, reject);
@@ -81,4 +82,20 @@ export class UserService {
         });
     }
 
+    public login(emailId: string, pwd: string): Promise<User> {
+        return this.userRepository.findOne({
+            where:
+            {
+                email: emailId,
+            },
+        });
+    }
+
+    public async signup(currentUser: User, user: User): Promise<User> {
+        return this.create(currentUser, user);
+    }
+
+    public getUserAndPets(currentUser: User, id: number): Promise<User> {
+        return this.userRepository.getUserAndPets(currentUser, id);
+    }
 }

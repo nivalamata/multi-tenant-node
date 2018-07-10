@@ -49,7 +49,7 @@ export class ClientService {
 
     public findOne(currentUser: User, id: number, name?: string): Promise<Client | undefined> {
         this.log.info('Find A client');
-        const findOptions: any = {where: {clientId: currentUser.clientId}};
+        const findOptions: any = { where: { clientId: currentUser.clientId } };
         if (id !== undefined) {
             findOptions.where.id = id;
         }
@@ -96,7 +96,7 @@ export class ClientService {
     public remove(currentUser: User, id: number): Promise<boolean> {
         this.log.info('Delete a client');
         return new Promise((resolve, reject) => {
-            this.findOne(currentUser, id).then( (client: Client) => {
+            this.findOne(currentUser, id).then((client: Client) => {
                 this.clientRepository.remove(client).then(() => {
                     resolve(true);
                 }, reject);

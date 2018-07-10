@@ -128,6 +128,97 @@
                 }
             }
         },
+        "/users/signup" :{
+            "post": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Signup New User" ,
+                "description": "",
+                "operationId": "Register USer",
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "in": "body",
+                        "name": "body",
+                        "description": "User object that needs to be added to the database",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NewUser"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "created",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "message": {
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+
+         "/users/login/{email}" :{
+            "put": {
+                "tags": [
+                    "User"
+                ],
+                "summary": "Login User" ,
+                "description": "",
+                "operationId": "Login USer",
+                "security": [
+                    {
+                        "JWT": []
+                    }
+                ],
+                "parameters": [
+                    {
+                        "name" : "email",
+                        "in": "path",
+                        "description": "User object that needs to be added to the database",
+                        "required": true,
+                        "schema": {
+                            "$ref": "#/definitions/NewUser"
+                        }
+                    }
+                ],
+                "responses": {
+                    "201": {
+                        "description": "created",
+                        "schema": {
+                            "type": "object",
+                            "properties": {
+                                "success": {
+                                    "type": "boolean"
+                                },
+                                "message": {
+                                    "type": "string"
+                                },
+                                "data": {
+                                    "$ref": "#/definitions/User"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
         "/users/{id}": {
             "get": {
                 "tags": [

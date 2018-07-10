@@ -16,4 +16,3 @@ type User implements TenantScopedModel {
     # Row Version
     epoch: Int
 }
-

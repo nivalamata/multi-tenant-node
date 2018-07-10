@@ -35,10 +35,10 @@ export class ClientController {
             findOptions.skip = args.offset;
         }
         if (args.order === 'last') {
-            findOptions.order = {id: 'DESC'};
+            findOptions.order = { id: 'DESC' };
         }
         if (args.order === 'name') {
-            findOptions.order = {name: 'ASC'};
+            findOptions.order = { name: 'ASC' };
         }
 
         return this.clientService.find(this.currentUser, findOptions);

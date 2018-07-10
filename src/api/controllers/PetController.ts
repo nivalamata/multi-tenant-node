@@ -16,29 +16,33 @@ export class PetController {
     ) { }
 
     @Get()
-    public find(@CurrentUser({required: true}) currentUser: User): Promise<Pet[]> {
+    public find(@CurrentUser({ required: true }) currentUser: User): Promise<Pet[]> {
         return this.petService.find(currentUser);
     }
 
     @Get('/:id')
     @OnUndefined(PetNotFoundError)
-    public one(@CurrentUser({required: true}) currentUser: User, @Param('id') id: number): Promise<Pet | undefined> {
+    public one(@CurrentUser({ required: true }) currentUser: User, @Param('id') id: number): Promise<Pet | undefined> {
         return this.petService.findOne(currentUser, id);
     }
 
     @Post()
-    public create(@CurrentUser({required: true}) currentUser: User, @Body() pet: Pet): Promise<Pet> {
+    public create(@CurrentUser({ required: true }) currentUser: User, @Body() pet: Pet): Promise<Pet> {
         return this.petService.create(currentUser, pet);
     }
 
     @Put('/:id')
-    public update(@CurrentUser({required: true}) currentUser: User, @Param('id') id: number, @Body() pet: Pet): Promise<Pet> {
+    public update(@CurrentUser({ required: true }) currentUser: User, @Param('id') id: number, @Body() pet: Pet): Promise<Pet> {
         return this.petService.update(currentUser, id, pet);
     }
 
     @Delete('/:id')
-    public delete(@CurrentUser({required: true}) currentUser: User, @Param('id') id: number): Promise<any> {
+    public delete(@CurrentUser({ required: true }) currentUser: User, @Param('id') id: number): Promise<any> {
         return this.petService.delete(currentUser, id);
     }
 
+    @Get('/pets/:ids')
+    public findByUserIds(@CurrentUser({ required: true }) currentUser: User, @Param('ids') ids: number[]): Promise<Pet[]> {
+        return this.petService.findByUserIds(currentUser, ids);
+    }
 }

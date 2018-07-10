@@ -16,31 +16,31 @@ export class ClientController {
 
     @Get()
     @Authorized()
-    public find( @CurrentUser({required: true}) currentUser: User): Promise<Client[]> {
+    public find(@CurrentUser({ required: true }) currentUser: User): Promise<Client[]> {
         return this.clientService.find(currentUser);
     }
 
     @Get('/:id')
     @Authorized()
     @OnUndefined(ClientNotFoundError)
-    public one( @CurrentUser({required: true}) currentUser: User, @Param('id') id: number): Promise<Client | undefined> {
+    public one(@CurrentUser({ required: true }) currentUser: User, @Param('id') id: number): Promise<Client | undefined> {
         return this.clientService.findOne(currentUser, id);
     }
 
     @Post()
-    public create(@CurrentUser({required: false}) currentUser: User,  @Body() client: Client): Promise<Client> {
+    public create(@CurrentUser({ required: false }) currentUser: User, @Body() client: Client): Promise<Client> {
         return this.clientService.create(currentUser, client);
     }
 
     @Put('/:id')
     @Authorized()
-    public update( @CurrentUser({required: true}) currentUser: User, @Param('id') id: number, @Body() client: Client): Promise<Client> {
+    public update(@CurrentUser({ required: true }) currentUser: User, @Param('id') id: number, @Body() client: Client): Promise<Client> {
         return this.clientService.update(currentUser, id, client);
     }
 
     @Delete('/:id')
     @Authorized()
-    public remove( @CurrentUser({required: true}) currentUser: User, @Param('id') id: number): Promise<boolean> {
+    public remove(@CurrentUser({ required: true }) currentUser: User, @Param('id') id: number): Promise<boolean> {
         return this.clientService.remove(currentUser, id);
     }
 

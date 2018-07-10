@@ -2,10 +2,10 @@ import * as Chalk from 'chalk';
 import * as commander from 'commander';
 import * as path from 'path';
 
-import { loadEntityFactories } from './';
+import { loadEntityFactories } from '.';
 import { getConnection } from './connection';
 import { loadSeeds } from './importer';
-import { runSeed, setConnection } from './index';
+import { runSeed, setConnection } from '.';
 
 // Cli helper
 commander

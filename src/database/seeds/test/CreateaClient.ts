@@ -1,6 +1,6 @@
 import { Connection } from 'typeorm/connection/Connection';
 
-import { Client } from '../../../../src/api/models/Client';
+import { Client } from '../../../api/models/Client';
 import { Factory, Seed } from '../../../lib/seed/types';
 import { SeedConstants } from '../SeedConstants';
 
@@ -9,7 +9,7 @@ export class CreateaClient implements Seed {
     public async seed(factory: Factory, connection: Connection): Promise<any> {
 
         const repo = connection.getRepository(Client);
-        const clientCheck = await repo.findOne({where: {name: SeedConstants.defaultClient}});
+        const clientCheck = await repo.findOne({ where: { name: SeedConstants.defaultClient } });
         if (clientCheck === undefined) {
             const client = new Client();
             client.name = SeedConstants.defaultClient;

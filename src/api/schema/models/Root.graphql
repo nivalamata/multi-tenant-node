@@ -13,8 +13,11 @@ interface TenantScopedModel {
 type Query {
     pets(limit: Int, offset: Int, order: String): [Pet],
     pet(id: ID): Pet,
+    findUserInfoForPets(user_id: ID): Pet
+
     users(limit: Int, offset: Int, order: String): [User],
     user(id: ID): User
+
     clients(limit: Int, offset: Int, order: String): [Client],
     client(id: ID, name: String): Client
 }
@@ -25,6 +28,9 @@ type Mutation {
 
     clientCreate(name: String): Client
     clientDelete(id: ID): Boolean
+
+    petCreate(name: String, age: Int, userId: Int): Pet
+    petDelete(id: ID): Boolean
 }
 
 schema {

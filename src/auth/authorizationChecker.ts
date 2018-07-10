@@ -27,7 +27,7 @@ export function authorizationChecker(connection: Connection): (action: Action, r
 
         // Request user info at auth0 with the provided token
         try {
-            action.request.tokeninfo = await authService.getTokenInfo(token);
+            action.request.tokeninfo = await authService.getTokenInfoForUser(token);
             log.info('Successfully checked token');
             return true;
         } catch (e) {
@@ -55,7 +55,7 @@ export function authorizationCheckerVesper(connection: Connection): (roles: stri
         }
 
         // Request user info at auth0 with the provided token
-        action.request['tokeninfo'] = await authService.getTokenInfo(token);
+        action.request['tokeninfo'] = await authService.getTokenInfoForUser(token);
         log.info('Successfully checked token');
         return true;
     };

@@ -1,9 +1,9 @@
 import { Entity, PrimaryColumn } from 'typeorm';
 
 @Entity('key')
-export class Key  {
+export class Key {
 
-    @PrimaryColumn({name: 'client_id'})
+    @PrimaryColumn({ name: 'client_id' })
     public clientId: number;
 
     public toString(): string {

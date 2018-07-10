@@ -12,11 +12,11 @@ export class TenantScopedModel {
     public key: number;
 
     @IsNotEmpty()
-    @Column({name: 'client_id'})
+    @Column({ name: 'client_id' })
     public clientId: number;
 
     @IsNotEmpty()
-    @Column({ name: 'created_by'})
+    @Column({ name: 'created_by' })
     public createdById: number;
 
     @ManyToOne(type => User)
@@ -24,19 +24,20 @@ export class TenantScopedModel {
     public createdBy: Promise<User>;
 
     @IsNotEmpty()
-    @Column({ name: 'updated_by'})
+    @Column({ name: 'updated_by' })
     public updatedById: number;
 
     @ManyToOne(type => User)
-    @JoinColumn([{name: 'client_id', referencedColumnName: 'clientId'}, { name: 'updated_by', referencedColumnName: 'key'}])
+    @JoinColumn([{ name: 'client_id', referencedColumnName: 'clientId' }, { name: 'updated_by', referencedColumnName: 'key' }])
     public updatedBy: Promise<User>;
 
-    @CreateDateColumn({ name: 'created_at'})
+    @CreateDateColumn({ name: 'created_at' })
     public createdAt: Date;
 
-    @UpdateDateColumn({ name: 'updated_at'})
+    @UpdateDateColumn({ name: 'updated_at' })
     public updatedAt: Date;
 
     @VersionColumn()
     public epoch: number;
+
 }

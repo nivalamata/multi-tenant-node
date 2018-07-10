@@ -1,8 +1,8 @@
 
 import { EntityManager } from 'typeorm';
 
-import { Client } from '../../../../src/api/models/Client';
-import { Key } from '../../../../src/api/models/Key';
+import { Client } from '../../../api/models/Client';
+import { Key } from '../../../api/models/Key';
 import { ProdSeed } from './ProdSeed';
 import { SeedConstants } from '../SeedConstants';
 
@@ -11,7 +11,7 @@ export class CreateClientRoot implements ProdSeed {
     public async seed(em: EntityManager): Promise<any> {
 
         const repo = em.getRepository(Client);
-        const clientCheck = await repo.findOne({where: {name: SeedConstants.rootClient}});
+        const clientCheck = await repo.findOne({ where: { name: SeedConstants.rootClient } });
         if (clientCheck === undefined) {
             const client = new Client();
             client.id = 0; // this is ignored just call insert statement

@@ -22,6 +22,9 @@ export class User extends TenantScopedModel {
     @Column()
     public email: string;
 
+    @Column({ name: 'password' })
+    public password: string;
+
     @OneToMany(type => Pet, pet => pet.user)
     public pets: Pet[];
 

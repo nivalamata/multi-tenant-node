@@ -72,6 +72,12 @@ export class CreateUserTable1511105183653 implements MigrationInterface {
                         length: '255',
                         isPrimary: false,
                         isNullable: false,
+                    }, {
+                        name: 'password',
+                        type: 'varchar',
+                        length: '50',
+                        isPrimary: false,
+                        isNullable: true,
                     },
                 ],
                 uniques: [

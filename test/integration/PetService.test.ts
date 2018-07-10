@@ -56,11 +56,11 @@ describe('PetService', () => {
         pet.createdById = userResult.id;
         pet.updatedById = userResult.id;
         const service = Container.get<PetService>(PetService);
-        const resultCreate = await service.create(pet);
+        const resultCreate = await service.create(user,pet);
         expect(resultCreate.name).toBe(pet.name);
         expect(resultCreate.age).toBe(pet.age);
 
-        const resultFind = await service.findOne(resultCreate.id);
+        const resultFind = await service.findOne(user,resultCreate.id);
         if (resultFind) {
             expect(resultFind.name).toBe(pet.name);
             expect(resultFind.age).toBe(pet.age);

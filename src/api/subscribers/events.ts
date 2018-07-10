@@ -13,4 +13,7 @@ export const events = {
     pet: {
         created: 'onPetCreate',
     },
+    owner: {
+        created: 'onOwnerCreate',
+    },
 };

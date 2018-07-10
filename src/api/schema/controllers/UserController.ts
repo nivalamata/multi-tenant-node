@@ -32,16 +32,16 @@ export class UserController {
             findOptions.skip = args.offset;
         }
         if (args.order === 'last') {
-            findOptions.order = {id: 'DESC'};
+            findOptions.order = { id: 'DESC' };
         }
         if (args.order === 'firstName') {
-            findOptions.order = {firstName: 'ASC'};
+            findOptions.order = { firstName: 'ASC' };
         }
         if (args.order === 'lastName') {
-            findOptions.order = {lastName: 'ASC'};
+            findOptions.order = { lastName: 'ASC' };
         }
         if (args.order === 'email') {
-            findOptions.order = {email: 'ASC'};
+            findOptions.order = { email: 'ASC' };
         }
 
         // todo: don't think this check is needed, @Authorized solves this issue
@@ -53,6 +53,7 @@ export class UserController {
     }
 
     // serves "user" requests
+    // finds pets along with user info
     @Query()
     @Authorized()
     public user(arg: { id: number }): Promise<User> {
@@ -60,7 +61,7 @@ export class UserController {
             throw new NotAuthorized();
         }
 
-        return this.userService.findOne(this.currentUser, arg.id);
+        return this.userService.getUserAndPets(this.currentUser, arg.id);
     }
 
     // serves "userSave" requests
@@ -84,4 +85,5 @@ export class UserController {
 
         return this.userService.remove(this.currentUser, arg.id);
     }
+
 }

@@ -1,6 +1,6 @@
 import * as Faker from 'faker';
 
-import { Client } from '../../../src/api/models/Client';
+import { Client } from '../../api/models/Client';
 import { define } from '../../lib/seed';
 
 define(Client, (faker: typeof Faker) => {
